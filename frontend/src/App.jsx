@@ -1,7 +1,8 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Welcome from './pages/Welcome'
-import Search from './pages/search'
+import Search from './pages/Search'
+import Results from './pages/Results'
+import ViewClasses from './pages/ViewClasses'
 import './index.css'
 
 
@@ -13,7 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/search" element={<Search />} />
-        
+        <Route path="/search/results" element={<Results />} />
+        <Route path = "/viewClasses" element = {<ViewClasses/>}/>
       </Routes>
     </Router>
       
@@ -24,9 +26,8 @@ function App() {
 export default App
 
 /*
-to-do:
-- search logic
+to-do: 
+- add to calender
 - export calender
-- backend
 - style
 */
