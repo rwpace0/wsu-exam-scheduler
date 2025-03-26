@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# Accessing the database from pgAdmin
+# Accessing the database from postgres
 class Exam(db.Model):
     __tablename__ = 'sp25'
     primary = db.Column('Primary', db.String(20))
