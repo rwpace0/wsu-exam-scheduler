@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Results from './Results'; 
 
 const TextBox = () => {
     // set is the function to update the var associated
@@ -45,12 +46,13 @@ const TextBox = () => {
                     <form onSubmit={handleSubmit}>
                         <input type="text" value={searchVal} onChange={handleInput} className="w-full max-w-[160px] h-full bg-white pl-2 text-base font-semibold outline-0" id="searchtext" />
 
-                        <button type="submit" className="bg-customCrimson p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-red-800 transition-colors">
+                        <button type="submit" onClick = {<Results></Results>} className="bg-customCrimson p-2 rounded-tr-lg rounded-br-lg text-white font-semibold hover:bg-red-800 transition-colors">
                             Search
                         </button>
                     </form>
                 </div>
 
+                
 
             </div>
         </div>
@@ -72,9 +74,11 @@ const Search = () => {
             </p>
             {/*search button and text box*/}
             <TextBox></TextBox>
+
+            
         </div>
-
-
+        
+        
 
     );
 }

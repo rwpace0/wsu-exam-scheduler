@@ -1,7 +1,10 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from database import db, Exam
 from sqlalchemy import text
 from config import Config
+from export import parse_time_range, combine_date_and_time
+from ics import Calendar, Event
+import pytz
 import psycopg2
 
 routes = Blueprint('routes', __name__)
@@ -28,7 +31,6 @@ def search():
     return jsonify({"exams": json_exams})
 
     
-    
 @routes.route('/search/results', methods = ['GET'])
 def results():
     return jsonify({'message': 'Hello from results'}), 200
@@ -36,3 +38,34 @@ def results():
 @routes.route('/viewClasses', methods = ['GET'])
 def view():
     return jsonify({'message': 'Hello from view'}), 200
+
+@routes.route("/export", methods=["GET"])
+def export_calendar():
+    sections = request.args.getlist("section")
+    print("Sections:", sections)  # Debugging line to check the sections received
+    if not sections:
+        return "No exam sections provided", 400
+    
+    exams = Exam.query.filter(Exam.section.in_(sections)).all()
+    if not exams:
+        return "Exams not found", 404
+    
+    cal = Calendar()
+    
+    for exam in exams:
+        try:
+            start_dt, end_dt = combine_date_and_time(exam)
+            
+
+        except Exception as e:
+            print(f"Error parsing exam {exam.section}: {e}")  # Debugging
+            continue  
+        event = Event()
+        event.name = exam.section
+        event.begin = start_dt
+        event.end = end_dt
+        cal.events.add(event)
+    
+    ics_content = cal.serialize()
+    return Response(ics_content, mimetype="text/calendar",
+                    headers={"Content-Disposition": "attachment; filename=final_exam_schedule.ics"})

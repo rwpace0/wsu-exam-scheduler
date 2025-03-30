@@ -1,20 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const ExportClasses = () => {
-    
-    
-
-    return (
-        <div className="flex flex-col items-center justify-center p-5">
-            <button
-                className="bg-customCrimson p-2 rounded-lg text-white font-semibold hover:bg-red-800 transition-colors"
-                >
-                    Export
-            </button>
-        </div>
-    );
-};
-
 const ViewClasses = () => {
     const [addedClass, setAddedClass] = useState([]);
 
@@ -29,6 +14,17 @@ const ViewClasses = () => {
         setAddedClass(updatedClass);
         sessionStorage.setItem('addedClass', JSON.stringify(updatedClass)); //update local storage
     };
+
+    const exportClasses = (exams) => {
+        const baseURL = "http://127.0.0.1:5000/export";
+        const params = new URLSearchParams();
+    
+    // Append each exam's section as a separate query parameter
+    exams.forEach(exam => params.append("section", exam.section));
+    
+    const url = `${baseURL}?${params.toString()}`;
+    window.open(url, "_blank");
+    }
 
     return (
         <div className="flex flex-col items-center justify-center p-5">
@@ -46,7 +42,14 @@ const ViewClasses = () => {
                 ))}
             </ul>
             
-                <ExportClasses/>
+            <div className="flex flex-col items-center justify-center p-5">
+            <button
+                className="bg-customCrimson p-2 rounded-lg text-white font-semibold hover:bg-red-800 transition-colors"
+                onClick={() => exportClasses(addedClass)}
+                >
+                    Export
+            </button>
+        </div>
             
         </div>
     );
