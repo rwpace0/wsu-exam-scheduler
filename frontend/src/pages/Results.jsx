@@ -1,3 +1,7 @@
+/*
+This was the the original search results page but was combined to the search page.
+*/
+
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 

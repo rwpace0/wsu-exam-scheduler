@@ -14,8 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/search/results" element={<Results />} />
-        <Route path = "/viewClasses" element = {<ViewClasses/>}/>
+        <Route path = "/view" element = {<ViewClasses/>}/>
       </Routes>
     </Router>
       
