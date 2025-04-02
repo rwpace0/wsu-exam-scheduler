@@ -23,7 +23,7 @@ const ViewClasses = () => {
     exams.forEach(exam => params.append("section", exam.section));
     
     const url = `${baseURL}?${params.toString()}`;
-    window.open(url, "_blank");
+    window.open(url, "_blank");// downloads the file
     }
 
     return (

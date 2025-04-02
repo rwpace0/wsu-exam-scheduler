@@ -54,12 +54,12 @@ def export_calendar():
     
     for exam in exams:
         try:
-            start_dt, end_dt = combine_date_and_time(exam)
-            
-
+            start_dt, end_dt = combine_date_and_time(exam) 
+        
         except Exception as e:
             print(f"Error parsing exam {exam.section}: {e}")  # Debugging
             continue  
+        
         event = Event()
         event.name = exam.section
         event.begin = start_dt
