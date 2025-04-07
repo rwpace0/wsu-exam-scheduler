@@ -3,6 +3,7 @@ import Welcome from "./pages/Welcome";
 import Search from "./pages/Search";
 import ViewClasses from "./pages/ViewClasses";
 import Navbar from "./components/Navbar";
+import About from "./pages/About";
 import "./index.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Welcome />} />
           <Route path="/search" element={<Search />} />
           <Route path="/view" element={<ViewClasses />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </>

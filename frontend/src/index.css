@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
-@theme{
-    --font-primary: "Roboto", "sans-serif";
-    --breakpoint-3xl: 120rem;
-    --color-customGray: #2f3136;
-    --color-customCrimson: #8a2b2b;
-    
-    /* ... */
+@theme {
+  --font-primary: "Roboto", "sans-serif";
+  --breakpoint-3xl: 120rem;
+  --color-customGray: #2f3136;
+  --color-customCrimson: #8a2b2b;
+  --color-hoverRed: #a60f2d;
+}
+
+/* Add this to your index.css */
+@layer base {
+  body {
+    @apply to-customCrimson min-h-screen bg-gradient-to-br from-black bg-fixed;
   }
-
-.bg-grayBG { background-color: var(--color-customGray); }
-.text-grayBG { color: var(--color-customGray); }
-
-.bg-crimsonBG { background-color: var(--color-customGray); }
-.text-crimsonBG { color: var(--color-customGray); }
+}
