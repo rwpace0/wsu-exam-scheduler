@@ -28,43 +28,56 @@ const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
       style={{ maxHeight: "calc(100vh - 300px)" }}
     >
       {exams.length > 0 ? (
-        <ul className="space-y-3">
-          {exams.map((exam, index) => {
-            const isAdded = addedClass.some(
-              (item) => item.section === exam.section,
-            );
-            return (
-              <li
-                key={index}
-                className="flex items-center justify-between border-b border-gray-300 p-2"
-              >
-                <div className="text-white">
-                  {exam.section}, {exam.day}, {exam.time}
-                </div>
-                <button
-                  onMouseEnter={() => setHover(exam.section)}
-                  onMouseLeave={() => setHover(null)}
-                  onClick={() => handleToggleClass(exam)}
-                  className={`ml-2 rounded-lg p-2 font-semibold text-white transition-colors ${
-                    !isAdded
-                      ? "border border-white bg-black hover:bg-gray-800"
-                      : hover === exam.section
-                        ? "border border-white bg-black"
-                        : "border border-white bg-black hover:bg-gray-800"
-                  }`}
+        <div className="w-full">
+          {/* Table header */}
+          <div className="mb-2 grid grid-cols-4 gap-2 border-b border-gray-400 pb-2 font-semibold text-white">
+            <div>Section</div>
+            <div>Day</div>
+            <div>Time</div>
+            <div className="text-right">Action</div>
+          </div>
+
+          {/* Table body */}
+          <div className="space-y-3">
+            {exams.map((exam, index) => {
+              const isAdded = addedClass.some(
+                (item) => item.section === exam.section,
+              );
+              return (
+                <div
+                  key={index}
+                  className="grid grid-cols-4 items-center gap-2 border-b border-gray-300 p-2"
                 >
-                  {!isAdded
-                    ? "Add"
-                    : hover === exam.section
-                      ? "Remove"
-                      : "Added"}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+                  <div className="text-white">{exam.section}</div>
+                  <div className="text-white">{exam.day}</div>
+                  <div className="text-white">{exam.time}</div>
+                  <div className="text-right">
+                    <button
+                      onMouseEnter={() => setHover(exam.section)}
+                      onMouseLeave={() => setHover(null)}
+                      onClick={() => handleToggleClass(exam)}
+                      className={`ml-2 rounded-lg p-2 font-semibold text-white transition-colors ${
+                        !isAdded
+                          ? "border border-white bg-black hover:bg-gray-800"
+                          : hover === exam.section
+                            ? "border border-white bg-black"
+                            : "border border-white bg-black hover:bg-gray-800"
+                      }`}
+                    >
+                      {!isAdded
+                        ? "Add"
+                        : hover === exam.section
+                          ? "Remove"
+                          : "Added"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       ) : (
-        <p>No exams found.</p>
+        <p className="text-white">No exams found.</p>
       )}
     </div>
   );

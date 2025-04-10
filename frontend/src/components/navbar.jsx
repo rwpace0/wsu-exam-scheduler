@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Home, Search, Eye, BookOpen, Calendar } from "lucide-react";
+import wsulogo from "../assets/wsulogo.png";
 
 const Navbar = () => {
   return (
@@ -9,9 +10,10 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-black font-bold text-white">
-              Logo
-            </div>
+            <img
+              src={wsulogo}
+              className="flex h-12 w-12 items-center justify-center"
+            />
           </Link>
         </div>
 
