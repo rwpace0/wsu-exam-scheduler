@@ -1,3 +1,4 @@
 react
 react-router-dom
 tailwindcss @tailwindcss/vite
+luicide
