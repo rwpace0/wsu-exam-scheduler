@@ -46,7 +46,7 @@ const Navbar = () => {
         {/* View */}
         <div className="group relative">
           <Link
-            to="/view"
+            to="/export"
             className="flex flex-col items-center justify-center p-3 text-white hover:text-gray-200"
           >
             <Calendar className="h-8 w-8 transition-opacity group-hover:opacity-0" />

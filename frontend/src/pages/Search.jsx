@@ -60,7 +60,7 @@ const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
                         !isAdded
                           ? "border border-white bg-black hover:bg-gray-800"
                           : hover === exam.section
-                            ? "border border-white bg-black"
+                            ? "border border-white bg-gray-800"
                             : "border border-white bg-black hover:bg-gray-800"
                       }`}
                     >
@@ -91,13 +91,13 @@ const SearchBox = ({ searchVal, setSearchVal, handleSubmit }) => {
 
   return (
     <div className="flex w-full max-w-md flex-col items-center">
-      <div className="w-full rounded-lg p-5">
+      <div className="w-full rounded-lg p-0">
         <div className="flex w-full shadow-lg">
-          <div className="flex w-10 items-center justify-center rounded-bl-lg rounded-tl-lg border-r border-gray-200 bg-white p-5">
+          <div className="flex w-10 items-center justify-center rounded-bl-lg rounded-tl-lg border-r border-gray-200 bg-white p-2">
             <svg
               viewBox="0 0 20 20"
               aria-hidden="true"
-              className="pointer-events-none absolute w-5 fill-gray-500 transition"
+              className="h-5 w-5 fill-gray-500 transition"
             >
               <path d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z"></path>
             </svg>
@@ -107,14 +107,14 @@ const SearchBox = ({ searchVal, setSearchVal, handleSubmit }) => {
               type="text"
               value={searchVal}
               onChange={handleInput}
-              className="h-full w-full bg-white pl-2 text-base font-semibold outline-0"
+              className="h-12 w-full bg-white px-4 text-base font-semibold outline-0"
               id="searchtext"
               placeholder="Enter search term..."
             />
             <button
               type="submit"
               disabled={searchVal.trim() === ""}
-              className={`rounded-br-lg rounded-tr-lg border border-white bg-black p-2 font-semibold text-white transition-colors hover:bg-gray-800`}
+              className="rounded-br-lg rounded-tr-lg border border-white bg-black px-4 py-2 font-semibold text-white transition-colors hover:bg-gray-800"
             >
               Search
             </button>
@@ -165,14 +165,32 @@ const Search = () => {
 
   return (
     <div className="flex h-[calc(100vh-4rem)] w-full flex-col items-center overflow-hidden">
-      <div className="pb-6 pt-20 text-center">
-        <h1 className="font-primary mb-4 text-4xl font-bold text-white">
+      <div className="max-w-3xl pb-6 pt-10">
+        <h1 className="font-primary mb-4 text-center text-4xl font-bold text-white">
           Search Exams
         </h1>
-        <p className="mb-8 max-w-2xl px-4 text-center text-lg text-gray-200">
-          Placeholder: Search for your classes to find exam schedules. Add
-          classes to your personal schedule for easy reference.
-        </p>
+
+        <div className="bg-customGray mb-6 rounded-lg border border-white bg-opacity-50 p-4 text-center">
+          <p className="mb-3 text-lg text-gray-200">
+            Find your exam schedule by entering the course code (e.g.{" "}
+            <span className="font-semibold text-white">MATH 171</span>).
+          </p>
+
+          <p className="mb-3 text-lg text-gray-200">
+            The exam section is denoted by a decimal, so Math 171 section 2
+            would be{" "}
+            <span className="font-semibold text-white">MATH 171.02</span>. The
+            default section is 1.
+          </p>
+
+          <p className="text-lg text-gray-200">
+            Once you have found your exams, click the{" "}
+            <span className="rounded border border-white bg-black px-2 py-1 text-sm font-semibold text-white">
+              Add
+            </span>{" "}
+            buttons and go to the export page to export all your exams at once.
+          </p>
+        </div>
       </div>
 
       {/* Search Component */}
