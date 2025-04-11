@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, Search, Eye, BookOpen, Calendar } from "lucide-react";
+import { Home, Search, BookOpen, Calendar } from "lucide-react";
 import wsulogo from "../assets/wsulogo.png";
 
 const Navbar = () => {

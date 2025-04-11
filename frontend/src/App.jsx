@@ -4,12 +4,12 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import Welcome from "./pages/Welcome.jsx";
-import Search from "./pages/Search.jsx";
-import ViewClasses from "./pages/ViewClasses.jsx";
-import Navbar from "./components/Navbar.jsx";
-import About from "./pages/About.jsx";
-import AnimatedLayout from "./components/Animations.jsx";
+import Welcome from "./pages/Welcome";
+import Search from "./pages/Search";
+import ViewClasses from "./pages/ViewClasses";
+import Navbar from "./components/navbar";
+import About from "./pages/About";
+import AnimatedLayout from "./components/Animations";
 import "./index.css";
 
 // This wrapper component ensures a new AnimatedLayout is created for each route
