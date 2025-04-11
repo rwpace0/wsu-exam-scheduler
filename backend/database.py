@@ -10,7 +10,7 @@ class Exam(db.Model):
     campus = db.Column('Campus', db.String(50))
     section = db.Column('Section', db.String(50), primary_key = True)
     day = db.Column('Day', db.Date)
-    time = db.Column('Time', db.Text) # change text data type 
+    time = db.Column('Time', db.Text)
 
     def to_json(self):
         return {

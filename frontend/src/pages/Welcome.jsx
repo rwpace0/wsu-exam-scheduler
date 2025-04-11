@@ -7,13 +7,12 @@ function Welcome() {
     <div className="flex h-[calc(100vh-4rem)] w-full flex-col items-center justify-center px-4">
       <div className="max-w-2xl text-center">
         <h1 className="font-primary mb-6 text-4xl font-bold text-white">
-          Welcome to the Exam Schedule Finder
+          Welcome to the Unoffical WSU Exam Scheduler
         </h1>
         <p className="mb-8 text-lg text-gray-200">
-          Placeholder: This application helps you find and organize your exam
-          schedule. Search for your classes, add them to your personal schedule,
-          and export them for easy reference. Get started by searching for your
-          classes or browse through available options.
+          This application helps you find and organize your exam schedule into
+          your calendar. Get started by searching for your classes and exporting
+          them to your calendar!
         </p>
         <button
           onClick={() => navigate("/search")}
