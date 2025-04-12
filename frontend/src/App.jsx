@@ -4,6 +4,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Welcome from "./pages/Welcome";
 import Search from "./pages/Search";
 import ViewClasses from "./pages/ViewClasses";
@@ -46,6 +47,7 @@ function App() {
           </Routes>
         </main>
       </Router>
+      <Analytics />
     </>
   );
 }
