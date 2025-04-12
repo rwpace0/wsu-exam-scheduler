@@ -68,4 +68,4 @@ def export_calendar():
     
     ics_content = cal.serialize()
     return Response(ics_content, mimetype="text/calendar",
-                    headers={"Content-Disposition": "attachment; filename=final_exam_schedule.ics"})
+                    headers={"Content-Disposition": "attachment; filename=wsufinalschedule.ics"})

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const ViewClasses = () => {
   const [addedClass, setAddedClass] = useState([]);
@@ -17,7 +18,7 @@ const ViewClasses = () => {
   };
 
   const exportClasses = (exams) => {
-    const baseURL = "http://127.0.0.1:5000/export";
+    const baseURL = `${API_URL}/export`;
     const params = new URLSearchParams();
 
     // Append each exam's section as a separate query parameter

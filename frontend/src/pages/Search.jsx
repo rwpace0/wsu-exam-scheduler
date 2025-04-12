@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
   const [hover, setHover] = useState(null);
@@ -139,7 +140,7 @@ const Search = () => {
   const fetchExams = async (query = "") => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:5000/search?q=${encodeURIComponent(query)}`,
+        `${API_URL}/search?q=${encodeURIComponent(query)}`,
       );
       const data = await response.json();
       setExams(data.exams);
