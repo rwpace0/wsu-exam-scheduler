@@ -140,7 +140,7 @@ const Search = () => {
   const fetchExams = async (query = "") => {
     try {
       const response = await fetch(
-        `${API_URL}/search?q=${encodeURIComponent(query)}`,
+        `https://scheduler-bosk.onrender.com/search?q=${encodeURIComponent(query)}`,
       );
       const data = await response.json();
       setExams(data.exams);

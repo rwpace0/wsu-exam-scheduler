@@ -18,7 +18,7 @@ const ViewClasses = () => {
   };
 
   const exportClasses = (exams) => {
-    const baseURL = `${API_URL}/export`;
+    const baseURL = "https://scheduler-bosk.onrender.com//export";
     const params = new URLSearchParams();
 
     // Append each exam's section as a separate query parameter
