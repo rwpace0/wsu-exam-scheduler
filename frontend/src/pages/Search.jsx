@@ -2,22 +2,28 @@ import React, { useEffect, useState } from "react";
 const API_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
+  // for button hover
   const [hover, setHover] = useState(null);
 
+  // add or remove class on button click
   const handleToggleClass = (exam) => {
     setAddedClass((prevClasses) => {
       let updatedClasses;
+      // if class is already in array
+      // some returns true if there is a matching item
       if (prevClasses.some((item) => item.section === exam.section)) {
-        // Remove the class if it already exists
+        // remove the class if it already exists
+        // filter creates a new array with prevClasses and adds new exam to end
         updatedClasses = prevClasses.filter(
           (item) => item.section !== exam.section,
         );
       } else {
-        // Add the class if it doesn't exist
+        // add the class if it doesn't exist
+        // ... to spread array
         updatedClasses = [...prevClasses, exam];
       }
 
-      // Update sessionStorage
+      // update sessionStorage
       sessionStorage.setItem("addedClass", JSON.stringify(updatedClasses));
       return updatedClasses;
     });
@@ -84,8 +90,9 @@ const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
   );
 };
 
-// Separate SearchBox component
+//SearchBox component
 const SearchBox = ({ searchVal, setSearchVal, handleSubmit }) => {
+  // allow typing
   const handleInput = (e) => {
     setSearchVal(e.target.value);
   };
@@ -126,23 +133,25 @@ const SearchBox = ({ searchVal, setSearchVal, handleSubmit }) => {
   );
 };
 
-// Main Search component
+// main Search component
 const Search = () => {
-  const [searchVal, setSearchVal] = useState("");
-  const [exams, setExams] = useState([]);
-  const [isSearched, setIsSearched] = useState(false);
+  const [searchVal, setSearchVal] = useState(""); // stores user input
+  const [exams, setExams] = useState([]); // stores total exam list from server
+  const [isSearched, setIsSearched] = useState(false); // keeps track of searching
   const [addedClass, setAddedClass] = useState(() => {
+    // check if there are classes in sessionstorage
     const storedClass = sessionStorage.getItem("addedClass");
-    return storedClass ? JSON.parse(storedClass) : [];
+    return storedClass ? JSON.parse(storedClass) : []; // if found parse and put them into state
   });
 
-  // Data fetching function
   const fetchExams = async (query = "") => {
     try {
       const response = await fetch(
         `https://scheduler-bosk.onrender.com/search?q=${encodeURIComponent(query)}`,
       );
+      //convert server's response into json
       const data = await response.json();
+      // store exams in state
       setExams(data.exams);
       return data;
     } catch (error) {
@@ -152,14 +161,13 @@ const Search = () => {
     }
   };
 
-  // Form submission handler
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await fetchExams(searchVal);
+    e.preventDefault(); //prevent page from reloading, always needed
+    await fetchExams(searchVal); // fetch exams from user input
     setIsSearched(true);
   };
 
-  // Initial data load
+  // fetch all when component first loads
   useEffect(() => {
     fetchExams();
   }, []);
@@ -201,7 +209,7 @@ const Search = () => {
         handleSubmit={handleSubmit}
       />
 
-      {/* Results Component - conditionally rendered */}
+      {/* Reuslts when search */}
       {isSearched && (
         <ResultsList
           searchVal={searchVal}

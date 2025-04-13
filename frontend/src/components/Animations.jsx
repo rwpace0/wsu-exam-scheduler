@@ -6,18 +6,18 @@ const AnimatedLayout = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Reset visibility on route change
+    // reset visibility on route change
     setIsVisible(false);
 
-    // Small delay before fading in
+    // small delay before fading in
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 50);
 
     return () => clearTimeout(timer);
-  }, [location.pathname]); // This dependency array ensures it re-runs on route changes
+  }, [location.pathname]); // rerun on route change
 
-  // Add animation for initial page load as well
+  // add animation for initial page load as well
   useEffect(() => {
     setIsVisible(true);
   }, []);

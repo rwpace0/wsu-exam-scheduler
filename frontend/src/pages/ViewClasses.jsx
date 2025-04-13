@@ -2,30 +2,39 @@ import React, { useEffect, useState } from "react";
 const API_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const ViewClasses = () => {
+  // track classes added by user
   const [addedClass, setAddedClass] = useState([]);
 
   useEffect(() => {
     // get the stored classes from sessionStorage
     const storedClass = sessionStorage.getItem("addedClass");
+    // if classes parse from json into the state
+    // if not set state to an empty array
     setAddedClass(storedClass ? JSON.parse(storedClass) : []);
     console.log(storedClass);
   }, []);
 
   const removeClass = (classToRemove) => {
+    // filter creates a new array that contains only the items returned true
+    // if item != class to remove return true to keep it in the array, false to leave it out
     const updatedClass = addedClass.filter((item) => item !== classToRemove);
+    // update new list
     setAddedClass(updatedClass);
-    sessionStorage.setItem("addedClass", JSON.stringify(updatedClass)); //update local storage
+    // save new list to sessionstorage
+    sessionStorage.setItem("addedClass", JSON.stringify(updatedClass));
   };
 
   const exportClasses = (exams) => {
     const baseURL = "https://scheduler-bosk.onrender.com//export";
     const params = new URLSearchParams();
 
-    // Append each exam's section as a separate query parameter
+    // use exam section as param
     exams.forEach((exam) => params.append("section", exam.section));
 
+    // make url with all sections
     const url = `${baseURL}?${params.toString()}`;
-    window.open(url, "_blank"); // downloads the file
+    // downloads the file
+    window.open(url, "_blank");
   };
 
   return (
@@ -44,6 +53,7 @@ const ViewClasses = () => {
         className="bg-customGray w-full max-w-2xl overflow-auto rounded-lg bg-opacity-90 p-6 shadow-lg"
         style={{ maxHeight: "calc(100vh - 300px)" }}
       >
+        {/* if classes have been added */}
         {addedClass.length > 0 ? (
           <div className="w-full">
             {/* Table header */}
