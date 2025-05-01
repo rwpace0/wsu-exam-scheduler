@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import LoadingSpinner from "../components/Loading";
 const API_URL = import.meta.env.VITE_SUPABASE_URL;
 
 const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
@@ -138,6 +139,7 @@ const Search = () => {
   const [searchVal, setSearchVal] = useState(""); // stores user input
   const [exams, setExams] = useState([]); // stores total exam list from server
   const [isSearched, setIsSearched] = useState(false); // keeps track of searching
+  const [loading, setLoading] = useState(false);
   const [addedClass, setAddedClass] = useState(() => {
     // check if there are classes in sessionstorage
     const storedClass = sessionStorage.getItem("addedClass");
@@ -145,6 +147,7 @@ const Search = () => {
   });
 
   const fetchExams = async (query = "") => {
+    setLoading(true);
     try {
       const response = await fetch(
         `https://scheduler-bosk.onrender.com/search?q=${encodeURIComponent(query)}`,
@@ -158,6 +161,8 @@ const Search = () => {
       console.error("Error fetching exams:", error);
       setExams([]);
       return { exams: [] };
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -209,8 +214,14 @@ const Search = () => {
         handleSubmit={handleSubmit}
       />
 
+      {loading && (
+        <div className="mt-4 justify-center">
+          <LoadingSpinner size="8" />
+        </div>
+      )}
+
       {/* Reuslts when search */}
-      {isSearched && (
+      {!loading && isSearched && (
         <ResultsList
           searchVal={searchVal}
           exams={exams}
