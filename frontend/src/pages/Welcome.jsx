@@ -14,6 +14,10 @@ function Welcome() {
           your calendar. Get started by searching for your classes and exporting
           them to your calendar!
         </p>
+        <p className="mb-8 text-lg text-gray-200">
+          Unfortunately, WSU has not published the final exam schedule for
+          Spring 2025. The next update will be for Fall 2025.
+        </p>
         <button
           onClick={() => navigate("/search")}
           className="mt-4 rounded-lg border-2 border-white bg-black px-8 py-3 text-xl text-white transition-all hover:bg-gray-900 hover:shadow-lg"
