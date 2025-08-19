@@ -23,7 +23,73 @@ def search():
     query = request.args.get('q', '').strip().lower()
     
     if query:
+        # Common abbreviation mappings for better search
+        abbreviation_mappings = {
+            'cs': 'cpt_s',
+            'cpts': 'cpt_s',
+            'computer': 'cpt_s',
+            'accounting': 'acctg',
+            'acct': 'acctg',
+            'math': 'math',
+            'mathematics': 'math',
+            'english': 'engl',
+            'eng': 'engl',
+            'biology': 'biol',
+            'bio': 'biol',
+            'chemistry': 'chem',
+            'physics': 'phys',
+            'history': 'hist',
+            'psychology': 'psyc',
+            'psych': 'psyc',
+            'economics': 'econ',
+            'business': 'bus',
+            'management': 'mgmt',
+            'marketing': 'mktg',
+            'finance': 'fin',
+            'statistics': 'stat',
+            'engineering': 'engr',
+            'nursing': 'nurs',
+            'education': 'educ',
+            'art': 'art',
+            'music': 'mus',
+            'theater': 'thtr',
+            'philosophy': 'phil',
+            'sociology': 'soc',
+            'anthropology': 'anth',
+            'geography': 'geog',
+            'geology': 'geol',
+            'political': 'pols',
+            'government': 'pols',
+            'communications': 'com',
+            'journalism': 'jour',
+            'foreign': 'forl',
+            'language': 'forl'
+        }
+        
+        # Try exact match first
         exams = Exam.query.filter(Exam.section.ilike(f"%{query}%")).all()
+        
+        # If no results, try abbreviation mappings
+        if not exams:
+            mapped_query = abbreviation_mappings.get(query, query)
+            if mapped_query != query:
+                exams = Exam.query.filter(Exam.section.ilike(f"%{mapped_query}%")).all()
+        
+        # If still no results, try partial matches with common patterns
+        if not exams:
+            # Try to find sections that start with the query
+            exams = Exam.query.filter(Exam.section.ilike(f"{query}%")).all()
+            
+        # If still no results, try more flexible matching
+        if not exams:
+            # Split query into parts and search for any part
+            query_parts = query.split()
+            for part in query_parts:
+                if len(part) >= 2:  # Only search for parts with 2+ characters
+                    partial_results = Exam.query.filter(Exam.section.ilike(f"%{part}%")).all()
+                    if partial_results:
+                        exams = partial_results
+                        break
     else:
         exams = Exam.query.all()  # If no query, return all exams
     
