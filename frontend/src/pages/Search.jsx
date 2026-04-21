@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import LoadingSpinner from "../components/Loading";
-const API_URL = import.meta.env.VITE_SUPABASE_URL;
+import { fetchExams as fetchExamsFromSupabase } from "../api/exams";
 
-const ResultsList = ({ searchVal, exams, addedClass, setAddedClass }) => {
+const ResultsList = ({ exams, addedClass, setAddedClass }) => {
   // for button hover
   const [hover, setHover] = useState(null);
 
@@ -149,11 +149,8 @@ const Search = () => {
   const fetchExams = async (query = "") => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `https://scheduler-bosk.onrender.com/search?q=${encodeURIComponent(query)}`,
-      );
-      //convert server's response into json
-      const data = await response.json();
+      const examsData = await fetchExamsFromSupabase(query);
+      const data = { exams: examsData };
       // store exams in state
       setExams(data.exams);
       return data;
@@ -223,7 +220,6 @@ const Search = () => {
       {/* Reuslts when search */}
       {!loading && isSearched && (
         <ResultsList
-          searchVal={searchVal}
           exams={exams}
           addedClass={addedClass}
           setAddedClass={setAddedClass}

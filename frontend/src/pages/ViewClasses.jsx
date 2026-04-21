@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-const API_URL = import.meta.env.VITE_SUPABASE_URL;
+import { exportExamsToIcs } from "../api/exportIcs";
 
 const ViewClasses = () => {
   // track classes added by user
@@ -24,17 +24,12 @@ const ViewClasses = () => {
     sessionStorage.setItem("addedClass", JSON.stringify(updatedClass));
   };
 
-  const exportClasses = (exams) => {
-    const baseURL = "https://scheduler-bosk.onrender.com//export";
-    const params = new URLSearchParams();
-
-    // use exam section as param
-    exams.forEach((exam) => params.append("section", exam.section));
-
-    // make url with all sections
-    const url = `${baseURL}?${params.toString()}`;
-    // downloads the file
-    window.open(url, "_blank");
+  const exportClasses = async (exams) => {
+    try {
+      await exportExamsToIcs(exams);
+    } catch (error) {
+      console.error("Error exporting exams to ICS:", error);
+    }
   };
 
   return (

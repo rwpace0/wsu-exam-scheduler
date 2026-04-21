@@ -14,12 +14,13 @@ import AnimatedLayout from "./components/Animations";
 import "./index.css";
 
 // This wrapper component ensures a new AnimatedLayout is created for each route
-const AnimatedPage = ({ component: Component }) => {
+const AnimatedPage = ({ component }) => {
   const location = useLocation();
+  const RouteComponent = component;
 
   return (
     <AnimatedLayout key={location.pathname}>
-      <Component />
+      <RouteComponent />
     </AnimatedLayout>
   );
 };
