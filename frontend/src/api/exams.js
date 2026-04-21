@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 
-const TABLE_NAME = "sp25";
+const TABLE_NAME = "finals";
 
 const abbreviationMappings = {
   cs: "cpt_s",
