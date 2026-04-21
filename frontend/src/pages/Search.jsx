@@ -169,9 +169,13 @@ const Search = () => {
     setIsSearched(true);
   };
 
-  // fetch all when component first loads
+  // fetch all when component first loads, then show the results table
   useEffect(() => {
-    fetchExams();
+    const load = async () => {
+      await fetchExams();
+      setIsSearched(true);
+    };
+    load();
   }, []);
 
   return (
