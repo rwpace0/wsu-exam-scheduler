@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, Search, BookOpen, Calendar } from "lucide-react";
+import { Search, BookOpen, Calendar } from "lucide-react";
 import wsulogo from "../assets/wsulogo.png";
 
 const Navbar = () => {
@@ -14,19 +14,6 @@ const Navbar = () => {
               src={wsulogo}
               className="flex h-12 w-12 items-center justify-center"
             />
-          </Link>
-        </div>
-
-        {/* Home */}
-        <div className="group relative">
-          <Link
-            to="/"
-            className="flex flex-col items-center justify-center p-3 text-white hover:text-gray-200"
-          >
-            <Home className="h-8 w-8 transition-opacity group-hover:opacity-0" />
-            <span className="absolute text-lg opacity-0 transition-opacity group-hover:opacity-100">
-              Home
-            </span>
           </Link>
         </div>
 

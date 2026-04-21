@@ -5,7 +5,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
-import Welcome from "./pages/Welcome";
 import Search from "./pages/Search";
 import ViewClasses from "./pages/ViewClasses";
 import Navbar from "./components/navbar";
@@ -35,7 +34,7 @@ function App() {
           className="transition-opacity duration-1000 ease-out"
         >
           <Routes>
-            <Route path="/" element={<AnimatedPage component={Welcome} />} />
+            <Route path="/" element={<AnimatedPage component={Search} />} />
             <Route
               path="/search"
               element={<AnimatedPage component={Search} />}
