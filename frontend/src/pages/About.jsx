@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div className="to-customCrimson min-h-screen overflow-hidden bg-gradient-to-br from-black bg-fixed">
+    <div className="min-h-[calc(100vh-4rem)] overflow-hidden">
       {/* Inner container uses height minus the navbar (4rem) so the content fits exactly in view */}
       <div className="flex h-[calc(100vh-4rem)] w-full flex-col items-center justify-center px-4">
         {/* Header Section */}

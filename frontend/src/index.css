@@ -1,20 +1,32 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
   --font-primary: "Roboto", "sans-serif";
+  --font-display: "Playfair Display", "Georgia", "Times New Roman", serif;
   --breakpoint-3xl: 120rem;
-  --color-customGray: #2f3136;
-  --color-customCrimson: #8a2b2b;
-  --color-hoverRed: #a60f2d;
+
+  /* WSU brand-aligned (see https://brand.wsu.edu/colors/) */
+  --color-wsu-crimson: #a60f2d;
+  --color-wsu-crimson-hover: #8c0c26;
+  --color-wsu-gray: #4d4d4d;
+  --color-wsu-bg: #0f1114;
+  --color-wsu-surface: #1a1d22;
+  --color-wsu-surface-elevated: #242830;
+  --color-wsu-border: #3d424d;
+  --color-wsu-muted: #9ca3af;
+
+  /* Legacy aliases (existing pages) */
+  --color-customGray: var(--color-wsu-surface-elevated);
+  --color-customCrimson: var(--color-wsu-crimson);
+  --color-hoverRed: var(--color-wsu-crimson);
 
   --animation-fade: 1s;
 }
 
-/* Add this to your index.css */
 @layer base {
   body {
-    @apply to-customCrimson min-h-screen bg-gradient-to-br from-black bg-fixed;
+    @apply min-h-screen bg-wsu-bg bg-fixed font-primary text-zinc-100 antialiased;
   }
 }
 
@@ -29,7 +41,6 @@
   }
 }
 
-/* Create animation utility classes */
 @layer utilities {
   .animate-fade-in {
     animation: fadeIn var(--animation-fade) ease-out forwards;

@@ -7,7 +7,7 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import Search from "./pages/Search";
 import ViewClasses from "./pages/ViewClasses";
-import Navbar from "./components/navbar";
+import Navbar from "./components/layout/Navbar";
 import About from "./pages/About";
 import AnimatedLayout from "./components/Animations";
 import "./index.css";
