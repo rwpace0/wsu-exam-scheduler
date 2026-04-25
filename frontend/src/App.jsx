@@ -10,6 +10,7 @@ import ViewClasses from "./pages/ViewClasses";
 import Navbar from "./components/layout/Navbar";
 import About from "./pages/About";
 import AnimatedLayout from "./components/Animations";
+import { AddedClassesProvider } from "./context/AddedClassesContext";
 import "./index.css";
 
 // This wrapper component ensures a new AnimatedLayout is created for each route
@@ -28,6 +29,7 @@ function App() {
   return (
     <>
       <Router>
+        <AddedClassesProvider>
         <Navbar />
         <main
           id="main-content"
@@ -46,6 +48,7 @@ function App() {
             <Route path="/about" element={<AnimatedPage component={About} />} />
           </Routes>
         </main>
+        </AddedClassesProvider>
       </Router>
       <Analytics />
     </>
