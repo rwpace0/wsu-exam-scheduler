@@ -1,13 +1,21 @@
+import { useState } from "react";
 import { Calendar, CalendarDays, Download } from "lucide-react";
 import { exportExamsToIcs } from "../../api/exportIcs";
 
 const ExamSchedulePanel = ({ addedClass, onRemove }) => {
+  const [exportError, setExportError] = useState("");
+
   const handleExport = async () => {
     if (!addedClass.length) return;
     try {
+      setExportError("");
       await exportExamsToIcs(addedClass);
     } catch (e) {
       console.error(e);
+      setExportError(
+        e?.message ||
+          "Export failed. Please verify each class has a valid exam day and time.",
+      );
     }
   };
 
@@ -87,6 +95,9 @@ const ExamSchedulePanel = ({ addedClass, onRemove }) => {
         <p className="mt-2 text-center text-xs text-wsu-muted">
           Works with Google Calendar, Outlook, Apple Calendar, and others.
         </p>
+        {exportError && (
+          <p className="mt-2 text-center text-xs text-red-300">{exportError}</p>
+        )}
       </div>
     </aside>
   );
