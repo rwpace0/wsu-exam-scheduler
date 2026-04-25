@@ -5,7 +5,9 @@ import AvailableCourses from "../components/courses/AvailableCourses";
 import ExamSchedulePanel from "../components/schedule/ExamSchedulePanel";
 import SearchBar from "../components/search/SearchBar";
 import SearchHero from "../components/search/SearchHero";
+import Toast from "../components/ui/Toast";
 import { useAddedClasses } from "../hooks/useAddedClasses";
+import { useToast } from "../hooks/useToast";
 
 const Search = () => {
   const [searchVal, setSearchVal] = useState("");
@@ -13,6 +15,7 @@ const Search = () => {
   const [isSearched, setIsSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [addedClass, setAddedClass] = useAddedClasses();
+  const { toast, showToast } = useToast();
 
   const fetchExams = useCallback(async (query = "") => {
     setLoading(true);
@@ -45,14 +48,22 @@ const Search = () => {
 
   const onToggleExam = useCallback(
     (exam) => {
+      const alreadyAdded = addedClass.some(
+        (item) => item.section === exam.section,
+      );
       setAddedClass((prev) => {
         if (prev.some((item) => item.section === exam.section)) {
           return prev.filter((item) => item.section !== exam.section);
         }
         return [...prev, exam];
       });
+      showToast(
+        alreadyAdded
+          ? `Removed ${exam.section} from schedule`
+          : `Added ${exam.section} to schedule`,
+      );
     },
-    [setAddedClass],
+    [addedClass, setAddedClass, showToast],
   );
 
   const onRemoveFromSchedule = useCallback(
@@ -60,8 +71,9 @@ const Search = () => {
       setAddedClass((prev) =>
         prev.filter((item) => item.section !== exam.section),
       );
+      showToast(`Removed ${exam.section} from Schedule`);
     },
-    [setAddedClass],
+    [setAddedClass, showToast],
   );
 
   return (
@@ -101,6 +113,7 @@ const Search = () => {
           </div>
         )}
       </div>
+      <Toast open={toast.open} message={toast.message} />
     </div>
   );
 };

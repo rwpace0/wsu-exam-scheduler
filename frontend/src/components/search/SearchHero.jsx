@@ -1,8 +1,20 @@
+const getCurrentSemesterYear = () => {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const year = now.getFullYear();
+
+  if (month >= 1 && month <= 5) return `Spring ${year}`;
+  if (month >= 6 && month <= 7) return `Summer ${year}`;
+  return `Fall ${year}`;
+};
+
 const SearchHero = () => {
+  const currentSemesterYear = getCurrentSemesterYear();
+
   return (
     <header className="mx-auto max-w-3xl text-center">
       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-wsu-muted">
-        Final exams
+        Final exams · {currentSemesterYear}
       </p>
       <h1 className="font-display mb-4 text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
         Find your classes. Never miss an exam.

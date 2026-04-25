@@ -1,17 +1,21 @@
 import { useCallback } from "react";
 import ExamSchedulePanel from "../components/schedule/ExamSchedulePanel";
+import Toast from "../components/ui/Toast";
 import { useAddedClasses } from "../hooks/useAddedClasses";
+import { useToast } from "../hooks/useToast";
 
 const ViewClasses = () => {
   const [addedClass, setAddedClass] = useAddedClasses();
+  const { toast, showToast } = useToast();
 
   const onRemove = useCallback(
     (exam) => {
       setAddedClass((prev) =>
         prev.filter((item) => item.section !== exam.section),
       );
+      showToast(`Removed ${exam.section} from Schedule`);
     },
-    [setAddedClass],
+    [setAddedClass, showToast],
   );
 
   return (
@@ -25,6 +29,7 @@ const ViewClasses = () => {
         </p>
       </div>
       <ExamSchedulePanel addedClass={addedClass} onRemove={onRemove} />
+      <Toast open={toast.open} message={toast.message} />
     </div>
   );
 };
