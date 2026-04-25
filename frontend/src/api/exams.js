@@ -68,34 +68,40 @@ const queryBySectionLike = async (pattern) => {
 const filterExamsBySection = (exams, matcher) =>
   exams.filter((exam) => matcher(exam.section.toLowerCase()));
 
+const normalizeForMatching = (value = "") =>
+  value.toLowerCase().replace(/[_\s-]/g, "");
+
 export const filterExamsLocally = (exams, query = "") => {
   const trimmedQuery = query.trim().toLowerCase();
   if (!trimmedQuery) return exams;
+  const normalizedQuery = normalizeForMatching(trimmedQuery);
 
   let results = filterExamsBySection(exams, (section) =>
-    section.includes(trimmedQuery),
+    normalizeForMatching(section).includes(normalizedQuery),
   );
 
   if (!results.length) {
     const mappedQuery = abbreviationMappings[trimmedQuery];
     if (mappedQuery && mappedQuery !== trimmedQuery) {
+      const normalizedMappedQuery = normalizeForMatching(mappedQuery);
       results = filterExamsBySection(exams, (section) =>
-        section.includes(mappedQuery),
+        normalizeForMatching(section).includes(normalizedMappedQuery),
       );
     }
   }
 
   if (!results.length) {
     results = filterExamsBySection(exams, (section) =>
-      section.startsWith(trimmedQuery),
+      normalizeForMatching(section).startsWith(normalizedQuery),
     );
   }
 
   if (!results.length) {
     const parts = trimmedQuery.split(/\s+/).filter((part) => part.length >= 2);
     for (const part of parts) {
+      const normalizedPart = normalizeForMatching(part);
       const partialResults = filterExamsBySection(exams, (section) =>
-        section.includes(part),
+        normalizeForMatching(section).includes(normalizedPart),
       );
       if (partialResults.length) {
         results = partialResults;
