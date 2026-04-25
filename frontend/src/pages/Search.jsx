@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { fetchExams as fetchExamsFromSupabase } from "../api/exams";
-import LoadingSpinner from "../components/Loading";
 import AvailableCourses from "../components/courses/AvailableCourses";
+import AvailableCoursesSkeleton from "../components/loading/AvailableCoursesSkeleton";
+import ExamSchedulePanelSkeleton from "../components/loading/ExamSchedulePanelSkeleton";
 import ExamSchedulePanel from "../components/schedule/ExamSchedulePanel";
 import SearchBar from "../components/search/SearchBar";
 import SearchHero from "../components/search/SearchHero";
@@ -90,8 +91,16 @@ const Search = () => {
         </div>
 
         {loading && (
-          <div className="flex justify-center py-8">
-            <LoadingSpinner size="8" />
+          <div
+            className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start"
+            aria-busy="true"
+          >
+            <div className="lg:col-span-8">
+              <AvailableCoursesSkeleton />
+            </div>
+            <div className="lg:col-span-4">
+              <ExamSchedulePanelSkeleton />
+            </div>
           </div>
         )}
 
