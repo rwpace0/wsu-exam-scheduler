@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar, CalendarDays, Download } from "lucide-react";
+import { Calendar, CalendarDays, Download, X } from "lucide-react";
 import { exportExamsToIcs } from "../../api/exportIcs";
 
 const ExamSchedulePanel = ({ addedClass, onRemove }) => {
@@ -60,7 +60,7 @@ const ExamSchedulePanel = ({ addedClass, onRemove }) => {
                 key={exam.section}
                 className="rounded-lg border border-wsu-border bg-wsu-surface-elevated p-3"
               >
-                <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0">
                     <p className="font-semibold text-white">{exam.section}</p>
                     <p className="text-sm text-wsu-muted">
@@ -71,9 +71,10 @@ const ExamSchedulePanel = ({ addedClass, onRemove }) => {
                   <button
                     type="button"
                     onClick={() => onRemove(exam)}
-                    className="shrink-0 rounded-md px-2 py-1 text-xs font-semibold text-red-300 hover:bg-red-950/50 hover:text-red-200"
+                    aria-label={`Remove ${exam.section}`}
+                    className="shrink-0 rounded-full border border-red-400/40 bg-red-950/40 p-2 text-red-300 transition-colors hover:bg-red-900/50 hover:text-red-200"
                   >
-                    Remove
+                    <X className="h-4 w-4" aria-hidden />
                   </button>
                 </div>
               </li>

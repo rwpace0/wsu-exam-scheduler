@@ -17,7 +17,10 @@ const SearchHero = () => {
         Final exams · {currentSemesterYear}
       </p>
       <h1 className="font-display mb-4 text-3xl font-semibold leading-tight text-white sm:text-4xl md:text-5xl">
-        Find your classes. Never miss an exam.
+        <span className="block">Find your classes.</span>
+        <span className="block">
+          <span className="italic text-wsu-crimson">Never miss</span> an exam.
+        </span>
       </h1>
       <p className="text-base text-wsu-muted sm:text-lg">
         Search by course section (for example{" "}
