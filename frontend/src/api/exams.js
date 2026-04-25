@@ -65,6 +65,48 @@ const queryBySectionLike = async (pattern) => {
   return data ?? [];
 };
 
+const filterExamsBySection = (exams, matcher) =>
+  exams.filter((exam) => matcher(exam.section.toLowerCase()));
+
+export const filterExamsLocally = (exams, query = "") => {
+  const trimmedQuery = query.trim().toLowerCase();
+  if (!trimmedQuery) return exams;
+
+  let results = filterExamsBySection(exams, (section) =>
+    section.includes(trimmedQuery),
+  );
+
+  if (!results.length) {
+    const mappedQuery = abbreviationMappings[trimmedQuery];
+    if (mappedQuery && mappedQuery !== trimmedQuery) {
+      results = filterExamsBySection(exams, (section) =>
+        section.includes(mappedQuery),
+      );
+    }
+  }
+
+  if (!results.length) {
+    results = filterExamsBySection(exams, (section) =>
+      section.startsWith(trimmedQuery),
+    );
+  }
+
+  if (!results.length) {
+    const parts = trimmedQuery.split(/\s+/).filter((part) => part.length >= 2);
+    for (const part of parts) {
+      const partialResults = filterExamsBySection(exams, (section) =>
+        section.includes(part),
+      );
+      if (partialResults.length) {
+        results = partialResults;
+        break;
+      }
+    }
+  }
+
+  return results;
+};
+
 export const fetchExams = async (query = "") => {
   const trimmedQuery = query.trim().toLowerCase();
   let rows = [];

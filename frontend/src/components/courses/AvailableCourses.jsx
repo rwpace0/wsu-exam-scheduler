@@ -1,6 +1,6 @@
 import CourseCard from "./CourseCard";
 
-const AvailableCourses = ({ exams, addedClass, onToggleExam }) => {
+const AvailableCourses = ({ exams, addedClass, onToggleExam, searchQuery }) => {
   return (
     <section
       className="rounded-xl border border-wsu-border bg-wsu-surface p-4 sm:p-6"
@@ -32,6 +32,7 @@ const AvailableCourses = ({ exams, addedClass, onToggleExam }) => {
                   exam={exam}
                   isAdded={isAdded}
                   onToggle={onToggleExam}
+                  searchQuery={searchQuery}
                 />
               </li>
             );

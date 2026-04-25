@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { fetchExams as fetchExamsFromSupabase } from "../api/exams";
+import {
+  fetchExams as fetchExamsFromSupabase,
+  filterExamsLocally,
+} from "../api/exams";
 import AvailableCourses from "../components/courses/AvailableCourses";
 import AvailableCoursesSkeleton from "../components/loading/AvailableCoursesSkeleton";
 import ExamSchedulePanelSkeleton from "../components/loading/ExamSchedulePanelSkeleton";
@@ -12,20 +15,32 @@ import { useToast } from "../hooks/useToast";
 
 const Search = () => {
   const [searchVal, setSearchVal] = useState("");
+  const [allExams, setAllExams] = useState([]);
   const [exams, setExams] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [addedClass, setAddedClass] = useAddedClasses();
   const { toast, showToast } = useToast();
 
-  const fetchExams = useCallback(async (query = "") => {
+  const applySearchFilter = useCallback(
+    (query) => {
+      const filteredExams = filterExamsLocally(allExams, query);
+      setExams(filteredExams);
+      setIsSearched(true);
+    },
+    [allExams],
+  );
+
+  const loadAllExams = useCallback(async () => {
     setLoading(true);
     try {
-      const examsData = await fetchExamsFromSupabase(query);
+      const examsData = await fetchExamsFromSupabase();
+      setAllExams(examsData);
       setExams(examsData);
       return { exams: examsData };
     } catch (error) {
       console.error("Error fetching exams:", error);
+      setAllExams([]);
       setExams([]);
       return { exams: [] };
     } finally {
@@ -35,17 +50,20 @@ const Search = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetchExams(searchVal);
-    setIsSearched(true);
+    applySearchFilter(searchVal);
   };
 
   useEffect(() => {
     const load = async () => {
-      await fetchExams();
+      await loadAllExams();
       setIsSearched(true);
     };
     load();
-  }, [fetchExams]);
+  }, [loadAllExams]);
+
+  useEffect(() => {
+    applySearchFilter(searchVal);
+  }, [searchVal, applySearchFilter]);
 
   const onToggleExam = useCallback(
     (exam) => {
@@ -111,6 +129,7 @@ const Search = () => {
                 exams={exams}
                 addedClass={addedClass}
                 onToggleExam={onToggleExam}
+                searchQuery={searchVal}
               />
             </div>
             <div className="lg:col-span-4">

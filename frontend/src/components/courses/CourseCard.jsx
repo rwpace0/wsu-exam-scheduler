@@ -1,7 +1,30 @@
 import { useState } from "react";
 
-const CourseCard = ({ exam, isAdded, onToggle }) => {
+const CourseCard = ({ exam, isAdded, onToggle, searchQuery = "" }) => {
   const [hover, setHover] = useState(false);
+
+  const renderSectionWithHighlight = () => {
+    const query = searchQuery.trim();
+    if (!query) return exam.section;
+
+    const lowerSection = exam.section.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const matchIndex = lowerSection.indexOf(lowerQuery);
+
+    if (matchIndex === -1) return exam.section;
+
+    const before = exam.section.slice(0, matchIndex);
+    const match = exam.section.slice(matchIndex, matchIndex + query.length);
+    const after = exam.section.slice(matchIndex + query.length);
+
+    return (
+      <>
+        {before}
+        <strong className="font-extrabold text-white">{match}</strong>
+        {after}
+      </>
+    );
+  };
 
   return (
     <article
@@ -13,7 +36,7 @@ const CourseCard = ({ exam, isAdded, onToggle }) => {
           id={`course-${exam.section}`}
           className="truncate text-lg font-semibold tracking-tight text-white sm:text-xl"
         >
-          {exam.section}
+          {renderSectionWithHighlight()}
         </h2>
       </div>
       <div className="flex shrink-0 flex-col items-stretch gap-2 sm:items-end">
